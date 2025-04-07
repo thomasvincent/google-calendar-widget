@@ -1,0 +1,1 @@
+Added definition of ko_calendar_loc if not defined by WordPress loc system
