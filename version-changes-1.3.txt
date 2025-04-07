@@ -1,0 +1,4 @@
+- Remove duplicate events when showing multiple calendars
+- Added 'Event Title Format' option
+- Added error checking for offline use
+- Changed layout of widget settings
