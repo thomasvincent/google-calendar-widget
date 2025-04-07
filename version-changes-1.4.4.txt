@@ -1,0 +1,1 @@
+Clearer error message if using an invalid API key.
