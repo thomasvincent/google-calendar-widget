@@ -1,0 +1,1 @@
+Added ability to support multiple feeds (up to 3) from one widget.
