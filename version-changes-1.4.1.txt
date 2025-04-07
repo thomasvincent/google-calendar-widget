@@ -1,0 +1,2 @@
+- Fixed typo data->date
+- Corrected timezone for all-day events
