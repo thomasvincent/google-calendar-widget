@@ -22,7 +22,7 @@
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "phpcompatibility/phpcompatibility-wp": "^2.1",
         "phpcsstandards/phpcsutils": "^1.0",
-        "phpcsstandards/phpcsextra": "^1.1"
+        "phpcsstandards/phpcsextra": "^1.3"
     },
     "scripts": {
         "phpcs": "phpcs --standard=WordPress --extensions=php .",
