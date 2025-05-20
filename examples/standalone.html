@@ -1,215 +1,237 @@
-<!DOCTYPE html>
+<\!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Calendar Widget - Standalone Example</title>
-    <link type="text/css" rel="stylesheet" href="../assets/css/google-calendar-widget.css" />
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            color: #333;
-            background-color: #f8f8f8;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            color: #0073aa;
-            margin-top: 0;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-        }
-        
-        .calendar-container {
-            border: 1px solid #bfbfbf;
-            padding: 15px;
-            border-radius: 4px;
-            margin-top: 20px;
-            background-color: #fff;
-        }
-        
-        .google-calendar-widget-title {
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .instructions {
-            background-color: #f8f8f8;
-            padding: 15px;
-            border-left: 4px solid #0073aa;
-            margin: 20px 0;
-        }
-        
-        code {
-            background-color: #f1f1f1;
-            padding: 2px 4px;
-            border-radius: 3px;
-            font-family: monospace;
-        }
-        
-        .footer {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 0.9em;
-            color: #666;
-        }
-        
-        .api-key-form {
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #f8f8f8;
-            border-radius: 4px;
-        }
-        
-        .api-key-form input[type="text"] {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        
-        .api-key-form button {
-            background-color: #0073aa;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        
-        .api-key-form button:hover {
-            background-color: #005f8b;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Calendar Widget Demo</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    
+    .widget-container {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .widget-title {
+      margin-top: 0;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+    
+    .calendar-events {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .calendar-event {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .calendar-event:last-child {
+      border-bottom: none;
+    }
+    
+    .event-title {
+      font-weight: bold;
+    }
+    
+    .event-time {
+      color: #666;
+      font-size: 0.9em;
+    }
+
+    .api-key-form {
+      margin-bottom: 20px;
+    }
+
+    .api-key-input {
+      padding: 8px;
+      font-size: 16px;
+      width: 300px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .load-button {
+      padding: 8px 16px;
+      background-color: #0073aa;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .load-button:hover {
+      background-color: #005f8b;
+    }
+
+    .instructions {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border-left: 4px solid #0073aa;
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Google Calendar Widget - Standalone Example</h1>
-        
-        <div class="instructions">
-            <p><strong>Instructions:</strong> Enter your Google API key below to display events from the example calendars. You can also customize the calendar IDs to display your own calendars.</p>
-            <p>To get a Google API key:</p>
-            <ol>
-                <li>Go to <a href="https://console.developers.google.com" target="_blank">https://console.developers.google.com</a></li>
-                <li>Create or select a project</li>
-                <li>Enable the Google Calendar API</li>
-                <li>Create an API key</li>
-                <li>Restrict the API key to your domain for security</li>
-            </ol>
-        </div>
-        
-        <div class="api-key-form">
-            <label for="api-key">Google API Key:</label>
-            <input type="text" id="api-key" placeholder="Enter your Google API key here">
-            <button id="load-calendar">Load Calendar</button>
-        </div>
-        
-        <div class="calendar-container">
-            <div class="google-calendar-widget-title" id="google-calendar-widget-title">Example Calendar</div>
-            <div class="google-calendar-widget-events" id="google-calendar-widget-events">
-                <div class="google-calendar-widget-loading">
-                    <img class="google-calendar-widget-image" src="../assets/images/loading.gif" alt="Loading..."/>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            <p>This is a standalone example of the Google Calendar Widget. For more information, visit the <a href="https://github.com/yourusername/google-calendar-widget" target="_blank">GitHub repository</a>.</p>
-        </div>
-    </div>
+  <h1>Google Calendar Widget Demo</h1>
+  
+  <div class="instructions">
+    <h2>Instructions</h2>
+    <p>To use this demo, you need a Google API key with the Google Calendar API enabled.</p>
+    <ol>
+      <li>Create a Google API key in the <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a></li>
+      <li>Enable the Google Calendar API for your project</li>
+      <li>Enter your API key below</li>
+      <li>Use a public calendar ID (like a holiday calendar)</li>
+    </ol>
+    <p>Note: For security reasons, you should restrict your API key in the Google Cloud Console.</p>
+  </div>
 
-    <!-- Load the required scripts -->
-    <script type="text/javascript" src="../assets/js/date.js"></script>
-    <script type="text/javascript" src="../assets/js/wiky.js"></script>
-    <script type="text/javascript" src="../assets/js/google-calendar-widget.js"></script>
-    <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
-    
-    <!-- Initialize the calendar -->
-    <script type="text/javascript">
-        // Enable debug mode to see console logs
-        window.googleCalendarWidgetDebug = true;
+  <div class="api-key-form">
+    <input type="text" id="api-key" class="api-key-input" placeholder="Enter your Google API key">
+    <input type="text" id="calendar-id" class="api-key-input" placeholder="Enter calendar ID (optional)">
+    <button id="load-calendar" class="load-button">Load Calendar</button>
+  </div>
+  
+  <div class="widget-container">
+    <h2 id="calendar-title" class="widget-title">Upcoming Events</h2>
+    <div id="calendar-events"></div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Default calendar ID (US Holidays)
+      const DEFAULT_CALENDAR_ID = 'en.usa#holiday@group.v.calendar.google.com';
+      
+      // DOM elements
+      const apiKeyInput = document.getElementById('api-key');
+      const calendarIdInput = document.getElementById('calendar-id');
+      const loadButton = document.getElementById('load-calendar');
+      const calendarTitle = document.getElementById('calendar-title');
+      const calendarEvents = document.getElementById('calendar-events');
+      
+      // Load calendar events
+      loadButton.addEventListener('click', function() {
+        const apiKey = apiKeyInput.value.trim();
+        let calendarId = calendarIdInput.value.trim();
         
-        // Initialize the Google API client
-        function initGoogleApi() {
-            // The Google Client API is ready to be used
-            google_calendar_widget.init();
-            
-            // Check if we have an API key in localStorage
-            const savedApiKey = localStorage.getItem('googleCalendarApiKey');
-            if (savedApiKey) {
-                document.getElementById('api-key').value = savedApiKey;
-                loadCalendar(savedApiKey);
-            } else {
-                // Show a message in the calendar container
-                const eventsDiv = document.getElementById('google-calendar-widget-events');
-                eventsDiv.innerHTML = '<div class="google-calendar-widget-error">Please enter your Google API key above and click "Load Calendar".</div>';
-            }
+        if (\!apiKey) {
+          alert('Please enter a Google API key');
+          return;
         }
         
-        // Load the calendar with the provided API key
-        function loadCalendar(apiKey) {
-            if (!apiKey) {
-                alert('Please enter a Google API key');
-                return;
-            }
-            
-            // Save the API key for future use
-            localStorage.setItem('googleCalendarApiKey', apiKey);
-            
-            // Reset the events container
-            const eventsDiv = document.getElementById('google-calendar-widget-events');
-            eventsDiv.innerHTML = '<div class="google-calendar-widget-loading"><img class="google-calendar-widget-image" src="../assets/images/loading.gif" alt="Loading..."/></div>';
-            
-            // Load the calendar
-            google_calendar_widget.loadCalendar(
-                apiKey,
-                'google-calendar-widget-title',
-                'google-calendar-widget-events',
-                10, // Maximum number of events to display
-                false, // Auto-expand events
-                'developer-calendar@google.com', // Primary calendar ID
-                'canadian__en@holiday.calendar.google.com', // Secondary calendar ID (optional)
-                '', // Tertiary calendar ID (optional)
-                '[STARTTIME - ][TITLE]' // Event title format
-            );
+        if (\!calendarId) {
+          calendarId = DEFAULT_CALENDAR_ID;
+          calendarIdInput.value = calendarId;
         }
         
-        // Initialize when the page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize the Google API
-            initGoogleApi();
-            
-            // Add event listener to the load button
-            document.getElementById('load-calendar').addEventListener('click', function() {
-                const apiKey = document.getElementById('api-key').value.trim();
-                loadCalendar(apiKey);
-            });
-            
-            // Add event listener for Enter key in the API key input
-            document.getElementById('api-key').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    const apiKey = this.value.trim();
-                    loadCalendar(apiKey);
-                }
-            });
+        loadCalendarEvents(apiKey, calendarId);
+      });
+      
+      // Function to load calendar events
+      function loadCalendarEvents(apiKey, calendarId) {
+        calendarEvents.innerHTML = '<p>Loading events...</p>';
+        
+        // Build the Google Calendar API URL
+        const today = new Date();
+        const timeMin = today.toISOString();
+        const nextYear = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
+        const timeMax = nextYear.toISOString();
+        
+        const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?key=${apiKey}&timeMin=${timeMin}&timeMax=${timeMax}&maxResults=10&singleEvents=true&orderBy=startTime`;
+        
+        // Fetch events from the API
+        fetch(url)
+          .then(response => {
+            if (\!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            displayEvents(data);
+          })
+          .catch(error => {
+            calendarEvents.innerHTML = `<p>Error loading events: ${error.message}</p>`;
+          });
+      }
+      
+      // Function to display events
+      function displayEvents(data) {
+        if (\!data.items || data.items.length === 0) {
+          calendarEvents.innerHTML = '<p>No upcoming events found.</p>';
+          return;
+        }
+        
+        // Update calendar title
+        if (data.summary) {
+          calendarTitle.textContent = data.summary;
+        }
+        
+        // Create events list
+        const eventsList = document.createElement('ul');
+        eventsList.className = 'calendar-events';
+        
+        data.items.forEach(event => {
+          const eventItem = document.createElement('li');
+          eventItem.className = 'calendar-event';
+          
+          // Format event date and time
+          let eventDateTime = '';
+          if (event.start.dateTime) {
+            // Event with specific time
+            const startDate = new Date(event.start.dateTime);
+            const endDate = new Date(event.end.dateTime);
+            eventDateTime = `${formatDate(startDate)} at ${formatTime(startDate)} - ${formatTime(endDate)}`;
+          } else if (event.start.date) {
+            // All-day event
+            const startDate = new Date(event.start.date);
+            eventDateTime = formatDate(startDate) + ' (All day)';
+          }
+          
+          eventItem.innerHTML = `
+            <div class="event-title">${event.summary || 'Untitled Event'}</div>
+            <div class="event-time">${eventDateTime}</div>
+          `;
+          
+          eventsList.appendChild(eventItem);
         });
-    </script>
+        
+        calendarEvents.innerHTML = '';
+        calendarEvents.appendChild(eventsList);
+      }
+      
+      // Helper function to format date
+      function formatDate(date) {
+        return date.toLocaleDateString(undefined, {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+      }
+      
+      // Helper function to format time
+      function formatTime(date) {
+        return date.toLocaleTimeString(undefined, {
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      }
+    });
+  </script>
 </body>
 </html>
+EOF < /dev/null

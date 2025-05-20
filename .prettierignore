@@ -1,0 +1,14 @@
+# Directories
+node_modules/
+vendor/
+dist/
+coverage/
+build/
+.git/
+.github/
+
+# Files
+*.min.js
+*.min.css
+package-lock.json
+composer.lock

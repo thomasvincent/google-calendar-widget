@@ -1,6 +1,6 @@
 # Google Calendar Widget
 
-[![CI Status](https://github.com/kazokuda/google-calendar-widget/workflows/CI/badge.svg)](https://github.com/kazokuda/google-calendar-widget/actions)
+[![CI Status](https://github.com/thomasvincent/google-calendar-widget/workflows/CI/badge.svg)](https://github.com/thomasvincent/google-calendar-widget/actions)
 [![WordPress Plugin Version](https://img.shields.io/wordpress/plugin/v/google-calendar-widget.svg)](https://wordpress.org/plugins/google-calendar-widget/)
 [![WordPress Plugin Rating](https://img.shields.io/wordpress/plugin/rating/google-calendar-widget.svg)](https://wordpress.org/plugins/google-calendar-widget/)
 [![WordPress Plugin Downloads](https://img.shields.io/wordpress/plugin/dt/google-calendar-widget.svg)](https://wordpress.org/plugins/google-calendar-widget/)
@@ -61,7 +61,7 @@ Google Calendar Widget allows you to display upcoming events from Google Calenda
 
 ### Manual Installation
 
-1. Download the plugin zip file from [the releases page](https://github.com/kazokuda/google-calendar-widget/releases)
+1. Download the plugin zip file from [the releases page](https://github.com/thomasvincent/google-calendar-widget/releases)
 2. Upload the `google-calendar-widget` folder to the `/wp-content/plugins/` directory
 3. Activate the plugin through the 'Plugins' menu in WordPress
 4. Go to Settings > Google Calendar Widget to configure your Google API key
@@ -161,11 +161,11 @@ See the [examples/standalone.html](examples/standalone.html) file for a complete
 
 ## Maintainers
 
-[@kazokuda](https://github.com/kazokuda)
+[@thomasvincent](https://github.com/thomasvincent)
 
 ## Contributing
 
-Feel free to dive in! [Open an issue](https://github.com/kazokuda/google-calendar-widget/issues/new) or submit PRs.
+Feel free to dive in! [Open an issue](https://github.com/thomasvincent/google-calendar-widget/issues/new) or submit PRs.
 
 This project follows the [Contributor Covenant](http://contributor-covenant.org/version/1/3/0/) Code of Conduct.
 
@@ -181,4 +181,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
 ## License
 
-[GPL-2.0](LICENSE) © Kaz Okuda
+[GPL-2.0](LICENSE) © Thomas Vincent

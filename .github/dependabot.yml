@@ -1,39 +1,37 @@
-# Dependabot configuration file
-# See https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
-
 version: 2
 updates:
-  # Enable version updates for npm
+  # Maintain dependencies for npm
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
-    versioning-strategy: increase
+    target-branch: "develop"
     labels:
-      - "npm"
       - "dependencies"
-      - "security"
+      - "javascript"
+    versioning-strategy: "auto"
 
-  # Enable version updates for Composer
+  # Maintain dependencies for Composer
   - package-ecosystem: "composer"
     directory: "/"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
-    versioning-strategy: increase
+    target-branch: "develop"
     labels:
-      - "composer"
       - "dependencies"
-      - "security"
+      - "php"
+    versioning-strategy: "widen"
 
-  # Enable version updates for GitHub Actions
+  # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 10
+      interval: "monthly"
+    open-pull-requests-limit: 5
+    target-branch: "develop"
     labels:
-      - "github-actions"
       - "dependencies"
-      - "security"
+      - "github-actions"
+EOF < /dev/null

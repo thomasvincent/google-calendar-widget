@@ -35,6 +35,19 @@ fi
 
 # Create logs and test-results directories if they don't exist
 mkdir -p logs test-results
+chmod -R 777 logs test-results
+
+# Ensure node_modules is properly installed
+if [ ! -d "node_modules" ]; then
+  echo "Installing npm dependencies..."
+  npm install --no-audit --legacy-peer-deps
+fi
+
+# Ensure composer dependencies are properly installed
+if [ ! -d "vendor" ]; then
+  echo "Installing composer dependencies..."
+  composer install --no-interaction --no-progress
+fi
 
 # Show current environment
 echo "============== ENVIRONMENT INFO =============="
@@ -45,5 +58,23 @@ echo "MySQL version: $(mysql -h mysql -u root -proot -e "SELECT VERSION()" | tai
 echo "WordPress version: ${WP_VERSION:-latest}"
 echo "=============================================="
 
-# Execute the command passed to docker run
-exec "$@"
+# Run tests if no command is provided
+if [ $# -eq 0 ]; then
+  echo "Running PHP tests..."
+  composer test > logs/composer-test.log 2>&1 || touch logs/composer-test-failed.log
+  
+  echo "Running JavaScript tests..."
+  npm test > logs/npm-test.log 2>&1 || touch logs/npm-test-failed.log
+  
+  if [ -f logs/composer-test-failed.log ] || [ -f logs/npm-test-failed.log ]; then
+    echo "Some tests failed. See logs for details."
+    cat logs/composer-test.log
+    cat logs/npm-test.log
+    exit 1
+  else
+    echo "All tests passed successfully!"
+  fi
+else
+  # Execute the command passed to docker run
+  exec "$@"
+fi

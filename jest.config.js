@@ -12,12 +12,14 @@ module.exports = {
   // The glob patterns Jest uses to detect test files
   testMatch: [
     '**/tests/**/*.js',
+    '**/tests/**/*.ts',
+    '**/tests/**/*.tsx',
     '!**/node_modules/**',
     '!**/vendor/**'
   ],
   
   // An array of file extensions your modules use
-  moduleFileExtensions: ['js', 'json'],
+  moduleFileExtensions: ['js', 'ts', 'tsx', 'json'],
   
   // A list of paths to directories that Jest should use to search for files in
   roots: [
@@ -62,5 +64,11 @@ module.exports = {
   ],
   
   // Indicates whether each individual test should be reported during the run
-  verbose: true
+  verbose: true,
+  
+  // Transform files with ts-jest
+  transform: {
+    '^.+\\.(ts|tsx)$': 'ts-jest',
+    '^.+\\.(js|jsx)$': 'babel-jest'
+  }
 };
