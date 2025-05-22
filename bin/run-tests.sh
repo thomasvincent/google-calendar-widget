@@ -1,108 +1,83 @@
-#!/bin/bash
-
-# Exit immediately if a command exits with a non-zero status
+#\!/bin/bash
 set -e
 
-# Create logs and test-results directories if they don't exist
-mkdir -p logs test-results
-
-# Parse arguments
-USE_DOCKER=false
+# Default values
+DOCKER_MODE=false
 WP_VERSION="latest"
-RUN_JS=true
-RUN_PHP=true
-RUN_PHPCS=true
+COVERAGE=false
 
-for arg in "$@"; do
-  case $arg in
+# Parse command-line arguments
+while [[ $# -gt 0 ]]; do
+  key="$1"
+  case $key in
     --docker)
-      USE_DOCKER=true
+      DOCKER_MODE=true
       shift
       ;;
     --wp-version=*)
-      WP_VERSION="${arg#*=}"
+      WP_VERSION="${key#*=}"
       shift
       ;;
-    --js-only)
-      RUN_JS=true
-      RUN_PHP=false
-      RUN_PHPCS=false
+    --coverage)
+      COVERAGE=true
       shift
       ;;
-    --php-only)
-      RUN_JS=false
-      RUN_PHP=true
-      RUN_PHPCS=true
-      shift
-      ;;
-    --skip-phpcs)
-      RUN_PHPCS=false
-      shift
-      ;;
-    --help)
-      echo "Usage: $0 [options]"
-      echo "Options:"
-      echo "  --docker            Run tests using Docker"
-      echo "  --wp-version=X.Y    Specify WordPress version (default: latest)"
-      echo "  --js-only           Run only JavaScript tests"
-      echo "  --php-only          Run only PHP tests (including PHPCS)"
-      echo "  --skip-phpcs        Skip PHP CodeSniffer"
-      echo "  --help              Show this help message"
-      exit 0
+    *)
+      echo "Unknown option: $key"
+      echo "Usage: $0 [--docker] [--wp-version=latest] [--coverage]"
+      exit 1
       ;;
   esac
 done
 
-# Function to run commands in Docker or locally
-run_command() {
-  if [ "$USE_DOCKER" = true ]; then
-    echo "Running in Docker: $1"
-    WP_VERSION=$WP_VERSION docker compose run --rm wordpress-tests bash -c "$1"
+# Create logs and test-results directories
+mkdir -p logs test-results
+chmod -R 777 logs test-results
+
+echo "Running tests with WP version: $WP_VERSION"
+echo "Docker mode: $DOCKER_MODE"
+echo "Coverage: $COVERAGE"
+
+# Run PHP tests
+echo "Running PHP tests..."
+if [ "$COVERAGE" = true ]; then
+  if [ "$DOCKER_MODE" = true ]; then
+    XDEBUG_MODE=coverage composer test -- --coverage-clover=test-results/clover.xml > logs/composer-test.log 2>&1 || touch logs/composer-test-failed.log
   else
-    echo "Running locally: $1"
-    eval "$1"
+    XDEBUG_MODE=coverage composer test -- --coverage-clover=test-results/clover.xml
   fi
-}
-
-# Print environment info
-echo "============================================"
-echo "Test Environment:"
-echo "  Docker: $USE_DOCKER"
-echo "  WordPress Version: $WP_VERSION"
-echo "  Running JS Tests: $RUN_JS"
-echo "  Running PHP Tests: $RUN_PHP"
-echo "  Running PHPCS: $RUN_PHPCS"
-echo "============================================"
-
-# Run tests based on configuration
-if [ "$RUN_JS" = true ]; then
-  echo "Running JavaScript tests..."
-  if run_command "npm test"; then
-    echo "✅ JavaScript tests passed"
+else
+  if [ "$DOCKER_MODE" = true ]; then
+    composer test > logs/composer-test.log 2>&1 || touch logs/composer-test-failed.log
   else
-    echo "❌ JavaScript tests failed"
+    composer test
+  fi
+fi
+
+# Run JavaScript tests
+echo "Running JavaScript tests..."
+if [ "$COVERAGE" = true ]; then
+  if [ "$DOCKER_MODE" = true ]; then
+    npm run test:coverage > logs/npm-test.log 2>&1 || touch logs/npm-test-failed.log
+  else
+    npm run test:coverage
+  fi
+else
+  if [ "$DOCKER_MODE" = true ]; then
+    npm test > logs/npm-test.log 2>&1 || touch logs/npm-test-failed.log
+  else
+    npm test
+  fi
+fi
+
+# Check for test failures in Docker mode
+if [ "$DOCKER_MODE" = true ]; then
+  if [ -f logs/composer-test-failed.log ] || [ -f logs/npm-test-failed.log ]; then
+    echo "Some tests failed. See logs for details."
+    cat logs/composer-test.log
+    cat logs/npm-test.log
     exit 1
-  fi
-fi
-
-if [ "$RUN_PHPCS" = true ]; then
-  echo "Running PHP CodeSniffer..."
-  if run_command "composer phpcs"; then
-    echo "✅ PHP CodeSniffer passed"
   else
-    echo "⚠️ PHP CodeSniffer found issues (continuing anyway)"
-    # Don't exit here to allow tests to run even with style issues
+    echo "All tests passed successfully\!"
   fi
 fi
-
-if [ "$RUN_PHP" = true ]; then
-  echo "Running PHP tests..."
-  if run_command "composer test"; then
-    echo "✅ PHP tests passed"
-  else
-    echo "❌ PHP tests failed"
-    exit 1
-  fi
-fi
-
-echo "✅ All requested tests completed successfully."

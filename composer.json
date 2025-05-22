@@ -1,13 +1,13 @@
 {
-    "name": "kazokuda/google-calendar-widget",
+    "name": "thomasvincent/google-calendar-widget",
     "description": "WordPress plugin for displaying Google Calendar events in a widget",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
     "authors": [
         {
-            "name": "Kaz Okuda",
-            "email": "kaz@okuda.ca",
-            "homepage": "http://notions.okuda.ca"
+            "name": "Thomas Vincent",
+            "email": "thomasvincent@gmail.com",
+            "homepage": "https://github.com/thomasvincent"
         }
     ],
     "require": {
@@ -17,7 +17,7 @@
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.13",
         "wp-coding-standards/wpcs": "^3.1",
-        "phpunit/phpunit": "^9.5 || ^10.0",
+        "phpunit/phpunit": "^10.0",
         "yoast/phpunit-polyfills": "^4.0",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "phpcompatibility/phpcompatibility-wp": "^2.1",

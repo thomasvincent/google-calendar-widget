@@ -1,0 +1,46 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-added-large-files
+      - id: check-merge-conflict
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
+    hooks:
+      - id: prettier
+        files: \.(js|ts|json|md|yml|yaml)$
+        exclude: |
+          (?x)^(
+            vendor/.*|
+            node_modules/.*|
+            .*\.min\.(js|css)|
+            package-lock\.json
+          )$
+
+  - repo: https://github.com/psf/black
+    rev: 25.1.0
+    hooks:
+      - id: black
+        files: \.(py)$
+
+  # PHP specific hooks
+  - repo: local
+    hooks:
+      - id: phpcs
+        name: WordPress Coding Standards
+        entry: bash -c 'cd "$1" && composer phpcs' --
+        language: system
+        files: \.php$
+        pass_filenames: false
+
+      - id: composer-validate
+        name: Validate composer.json
+        entry: bash -c 'cd "$1" && composer validate --strict' --
+        language: system
+        files: composer\.(json|lock)$
+        pass_filenames: false

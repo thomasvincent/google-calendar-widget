@@ -10,10 +10,8 @@ permissions:
   contents: read
 
 jobs:
-  # Temporarily disable containerized tests until Docker configuration is fixed
-  # Use containerized tests for comprehensive testing across WordPress versions
+  # Enable containerized tests for comprehensive testing across WordPress versions
   containerized-tests:
-    continue-on-error: true
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -156,9 +154,17 @@ jobs:
         
     - name: Run PHP tests
       run: composer test
+
+    - name: Generate PHP code coverage report
+      run: composer test -- --coverage-clover=coverage.xml
+        
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./coverage.xml
+        flags: php
+        fail_ci_if_error: false
       
-    # PHP CodeSniffer check is now handled separately in the lint job
-  
   js-tests:
     runs-on: ubuntu-latest
     
@@ -181,10 +187,19 @@ jobs:
       
     - name: Run JavaScript tests
       run: npm test
+
+    - name: Generate JS code coverage report
+      run: npm run test:coverage
+      
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./coverage/lcov.info
+        flags: javascript
+        fail_ci_if_error: false
       
   lint:
     runs-on: ubuntu-latest
-    continue-on-error: true
     
     steps:
     - uses: actions/checkout@v4
@@ -192,7 +207,7 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.0'
+        php-version: '8.1'
         tools: composer, phpcs
         extensions: mbstring, xml, intl
         
@@ -206,7 +221,6 @@ jobs:
       run: composer config-phpcs
       
     - name: Run PHPCS
-      continue-on-error: true
       run: composer phpcs
       
     - name: Setup Node.js
@@ -219,5 +233,7 @@ jobs:
       run: npm ci || npm install --legacy-peer-deps
       
     - name: Run ESLint
-      continue-on-error: true
       run: npm run lint
+
+    - name: Run Prettier Check
+      run: npx prettier --check "**/*.{js,json,md}"

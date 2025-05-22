@@ -3,72 +3,87 @@ name: Release
 on:
   push:
     tags:
-      - v*.*.*
+      - 'v*'
 
 permissions:
   contents: write
 
 jobs:
-  build:
-    name: Create Release
+  build-and-release:
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.0
-          extensions: mbstring, intl
-          coverage: none
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 16.x
-          cache: npm
-
-      - name: Install dependencies
-        run: |
-          composer install --prefer-dist --no-progress
-          npm install
-
-      # Temporarily disable PHPCS configuration until we can fix the coding standards issues
-      # - name: Configure PHPCS
-      #   run: composer config-phpcs
-
-      - name: Run tests
-        run: |
-          npm test
-          # Temporarily disable PHPCS checks until we can fix the coding standards issues
-          # composer phpcs
-          composer test
-
-      - name: Build plugin
-        run: |
-          mkdir -p build/google-calendar-widget
-          cp -r *.php *.txt *.md languages examples build/google-calendar-widget/
-          cp -r assets includes build/google-calendar-widget/
-          cd build
-          zip -r google-calendar-widget.zip google-calendar-widget
-
-      - name: Get version from tag
-        id: get_version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
-
-      - name: Create Release and Upload Asset
-        uses: softprops/action-gh-release@v2
-        with:
-          name: Release ${{ steps.get_version.outputs.VERSION }}
-          body: |
-            See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for details.
-          draft: false
-          prerelease: false
-          files: |
-            ./build/google-calendar-widget.zip
-          fail_on_unmatched_files: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        extensions: mbstring, intl, pdo_mysql, gd, zip, exif
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: npm
+    
+    - name: Install PHP dependencies
+      run: composer install --no-dev --optimize-autoloader --prefer-dist
+    
+    - name: Install Node.js dependencies and build assets
+      run: npm ci && npm run build
+    
+    - name: Create release artifact
+      run: |
+        # Extract version from tag
+        VERSION=${GITHUB_REF#refs/tags/v}
+        echo "Building version $VERSION"
+        
+        # Create distribution directory
+        mkdir -p dist/google-calendar-widget
+        
+        # Copy required files to distribution directory
+        cp -R assets includes languages bin *.php readme.txt LICENSE dist/google-calendar-widget/
+        
+        # Create zip archive
+        cd dist
+        zip -r google-calendar-widget-$VERSION.zip google-calendar-widget
+        cd ..
+    
+    - name: Generate changelog
+      id: changelog
+      run: |
+        # Get the previous tag
+        PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+        
+        if [ -z "$PREV_TAG" ]; then
+          # If no previous tag exists
+          echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
+          echo "First release" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+        else
+          # Generate changelog from git commits
+          echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
+          git log --pretty=format:"* %s (%an)" $PREV_TAG..HEAD | grep -v "Merge" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: dist/google-calendar-widget-*.zip
+        body: |
+          ## Google Calendar Widget ${{ github.ref_name }}
+          
+          ${{ steps.changelog.outputs.CHANGELOG }}
+          
+          ### Installation
+          
+          1. Download the zip file and extract it
+          2. Upload the `google-calendar-widget` directory to the `/wp-content/plugins/` directory
+          3. Activate the plugin through the 'Plugins' menu in WordPress
+          4. Configure your Google API key in the settings
+EOF < /dev/null
