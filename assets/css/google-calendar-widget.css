@@ -32,143 +32,143 @@
 
 /* Loading indicator */
 .google-calendar-widget-loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100px;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  text-align: center;
 }
 
 .google-calendar-widget-image {
-    max-width: 100%;
-    height: auto;
+  max-width: 100%;
+  height: auto;
 }
 
 /* Date headers */
 .google-calendar-widget-date {
-    margin-top: 12px;
-    margin-bottom: 6px;
-    font-weight: bold;
-    font-size: 1.1em;
-    color: #333;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 4px;
+  margin-top: 12px;
+  margin-bottom: 6px;
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 4px;
 }
 
 /* Event list container */
 .google-calendar-widget-event-list {
-    margin: 0 0 12px 0;
-    padding: 0 4px;
+  margin: 0 0 12px 0;
+  padding: 0 4px;
 }
 
 /* Event item */
 .google-calendar-widget-event-item {
-    margin-bottom: 4px;
+  margin-bottom: 4px;
 }
 
 /* Event title links */
 .google-calendar-widget-entry-title {
-    display: block;
-    padding: 6px 0;
-    color: #0073aa;
-    text-decoration: none;
-    cursor: pointer;
-    transition: color 0.2s ease;
+  display: block;
+  padding: 6px 0;
+  color: #0073aa;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
 }
 
 .google-calendar-widget-entry-title:hover {
-    color: #00a0d2;
-    text-decoration: underline;
+  color: #00a0d2;
+  text-decoration: underline;
 }
 
 .google-calendar-widget-entry-title:focus {
-    outline: 1px dotted #0073aa;
-    box-shadow: 0 0 0 1px #0073aa;
+  outline: 1px dotted #0073aa;
+  box-shadow: 0 0 0 1px #0073aa;
 }
 
 /* Event details */
 .google-calendar-widget-entry-date-row {
-    padding-top: 6px;
-    color: #555;
+  padding-top: 6px;
+  color: #555;
 }
 
 .google-calendar-widget-entry-date-label {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .google-calendar-widget-entry-date-text {
-    margin-bottom: 4px;
+  margin-bottom: 4px;
 }
 
 .google-calendar-widget-entry-location-text {
-    margin-bottom: 8px;
-    color: #555;
-    font-style: italic;
+  margin-bottom: 8px;
+  color: #555;
+  font-style: italic;
 }
 
 .google-calendar-widget-entry-body {
-    margin: 8px 0 12px 0;
-    line-height: 1.5;
+  margin: 8px 0 12px 0;
+  line-height: 1.5;
 }
 
 /* Indent paragraphs in event body */
 .google-calendar-widget-entry-body p {
-    margin: 0 0 8px 0;
+  margin: 0 0 8px 0;
 }
 
 /* Error messages */
 .google-calendar-widget-error {
-    color: #d54e21;
-    padding: 10px;
-    background-color: #f8f8f8;
-    border-left: 4px solid #d54e21;
-    margin: 10px 0;
+  color: #d54e21;
+  padding: 10px;
+  background-color: #f8f8f8;
+  border-left: 4px solid #d54e21;
+  margin: 10px 0;
 }
 
 /* No events message */
 .google-calendar-widget-no-events {
-    padding: 10px;
-    color: #555;
-    font-style: italic;
-    text-align: center;
+  padding: 10px;
+  color: #555;
+  font-style: italic;
+  text-align: center;
 }
 
 /* Admin form styles */
 .google-calendar-widget-form .description {
-    display: block;
-    margin-top: 4px;
-    color: #666;
-    font-style: italic;
+  display: block;
+  margin-top: 4px;
+  color: #666;
+  font-style: italic;
 }
 
 /* Responsive adjustments */
 @media (max-width: 600px) {
-    .google-calendar-widget-date {
-        font-size: 1em;
-    }
-    
-    .google-calendar-widget-entry-title {
-        padding: 8px 0;
-    }
+  .google-calendar-widget-date {
+    font-size: 1em;
+  }
+
+  .google-calendar-widget-entry-title {
+    padding: 8px 0;
+  }
 }
 
 /* High contrast mode support */
 @media (forced-colors: active) {
-    .google-calendar-widget-entry-title {
-        color: linktext;
-    }
-    
-    .google-calendar-widget-entry-title:hover {
-        color: linktext;
-    }
-    
-    .google-calendar-widget-error {
-        border-left-color: currentColor;
-    }
+  .google-calendar-widget-entry-title {
+    color: linktext;
+  }
+
+  .google-calendar-widget-entry-title:hover {
+    color: linktext;
+  }
+
+  .google-calendar-widget-error {
+    border-left-color: currentColor;
+  }
 }
 
 /* RTL support */
 .rtl .google-calendar-widget-error {
-    border-left: none;
-    border-right: 4px solid #d54e21;
+  border-left: none;
+  border-right: 4px solid #d54e21;
 }

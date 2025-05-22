@@ -17,9 +17,9 @@
     "noImplicitAny": false
   },
   "include": [
-    "assets/js/src/**/*.ts", 
-    "assets/js/src/**/*.tsx", 
-    "tests/**/*.ts", 
+    "assets/js/src/**/*.ts",
+    "assets/js/src/**/*.tsx",
+    "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
   "exclude": ["node_modules", "dist"]

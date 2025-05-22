@@ -33,6 +33,7 @@ WP_VERSION=6.4 docker compose up
 ```
 
 Available WordPress versions include:
+
 - `latest` (default)
 - `6.4`
 - `6.3`
@@ -67,6 +68,7 @@ Test logs are automatically saved to the `logs` directory:
 The container environment consists of:
 
 1. **WordPress Test Container**: A PHP 8.0 environment with all necessary dependencies installed, including:
+
    - WordPress core (specific version can be specified)
    - PHPUnit with Xdebug for code coverage
    - Composer dependencies

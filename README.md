@@ -91,6 +91,7 @@ Google Calendar Widget allows you to display upcoming events from Google Calenda
 ### Event Title Format
 
 Use the following placeholders in the Event Title Format field:
+
 - `[TITLE]`: The event title
 - `[STARTTIME]`: The start time (or "All Day" for all-day events)
 - `[ENDTIME]`: The end time (blank for all-day events)
@@ -145,15 +146,15 @@ The plugin provides the following JavaScript API for developers:
 ```javascript
 // Initialize the calendar with custom settings
 google_calendar_widget.loadCalendar(
-    'YOUR_API_KEY',
-    'element-title-id',
-    'element-events-id',
-    10, // Maximum number of events
-    false, // Auto-expand events
-    'primary-calendar-id@example.com',
-    'secondary-calendar-id@example.com',
-    'tertiary-calendar-id@example.com',
-    '[STARTTIME - ][TITLE]' // Event title format
+  'YOUR_API_KEY',
+  'element-title-id',
+  'element-events-id',
+  10, // Maximum number of events
+  false, // Auto-expand events
+  'primary-calendar-id@example.com',
+  'secondary-calendar-id@example.com',
+  'tertiary-calendar-id@example.com',
+  '[STARTTIME - ][TITLE]' // Event title format
 );
 ```
 

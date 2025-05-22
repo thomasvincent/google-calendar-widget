@@ -25,12 +25,14 @@ This project follows the [GitHub Flow](https://guides.github.com/introduction/fl
 ### Setting Up the Development Environment
 
 1. Clone the repository:
+
    ```
    git clone https://github.com/yourusername/google-calendar-widget.git
    cd google-calendar-widget
    ```
 
 2. Install dependencies:
+
    ```
    composer install
    npm install
@@ -44,11 +46,13 @@ This project follows the [GitHub Flow](https://guides.github.com/introduction/fl
 ### Running Tests
 
 - Run PHP tests:
+
   ```
   composer test
   ```
 
 - Run JavaScript tests:
+
   ```
   npm test
   ```
@@ -76,17 +80,20 @@ This project follows the [GitHub Flow](https://guides.github.com/introduction/fl
 Releases are managed by the project maintainers following these steps:
 
 1. Update version numbers in:
+
    - `ko-calendar.php` (plugin header)
    - `package.json`
    - `composer.json`
    - `CHANGELOG.md`
 
 2. Create a release branch:
+
    ```
    git checkout -b release/vX.Y.Z
    ```
 
 3. Commit version changes:
+
    ```
    git add .
    git commit -m "Prepare release vX.Y.Z"
@@ -95,6 +102,7 @@ Releases are managed by the project maintainers following these steps:
 4. Create a pull request to merge into `main`
 
 5. After merging, tag the release:
+
    ```
    git checkout main
    git pull

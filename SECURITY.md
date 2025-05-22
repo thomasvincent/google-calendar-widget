@@ -30,14 +30,17 @@ We take the security of Google Calendar Widget seriously. If you believe you've 
 This plugin implements several security measures:
 
 1. **Input Validation and Sanitization**
+
    - All user inputs are validated and sanitized
    - WordPress security functions are used throughout the codebase
 
 2. **Output Escaping**
+
    - All output is properly escaped to prevent XSS attacks
    - Context-appropriate escaping functions are used
 
 3. **Dependency Management**
+
    - Dependabot monitors dependencies for vulnerabilities
    - Regular updates to address security issues
 
@@ -48,10 +51,12 @@ This plugin implements several security measures:
 ## Security Best Practices for Users
 
 1. **Keep the Plugin Updated**
+
    - Always use the latest version of the plugin
    - Subscribe to release notifications
 
 2. **API Key Security**
+
    - Restrict your Google API key to specific domains
    - Limit API key usage to only the Google Calendar API
 

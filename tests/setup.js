@@ -1,8 +1,8 @@
 /**
  * Jest setup file for Google Calendar Widget
- * 
+ *
  * This file sets up the testing environment for Jest.
- * 
+ *
  * @package Google_Calendar_Widget
  * @version 2.1.0
  */
@@ -15,11 +15,11 @@ global.window = {
   googleCalendarWidgetDebug: true,
   google_calendar_widget_loc: {
     all_day: 'All Day',
-    all_day_event: 'All Day Event'
+    all_day_event: 'All Day Event',
   },
   performance: {
-    now: jest.fn()
-  }
+    now: jest.fn(),
+  },
 };
 
 // Mock the global document object with proper Jest mock functions
@@ -27,15 +27,15 @@ global.document = {
   getElementById: jest.fn(() => ({
     childNodes: [],
     appendChild: jest.fn(),
-    removeChild: jest.fn()
+    removeChild: jest.fn(),
   })),
   createElement: jest.fn(() => ({
     className: '',
     textContent: '',
     innerHTML: '',
     appendChild: jest.fn(),
-    setAttribute: jest.fn()
-  }))
+    setAttribute: jest.fn(),
+  })),
 };
 
 // Mock the global gapi object with proper Jest mock functions
@@ -47,17 +47,17 @@ global.gapi = {
       add: jest.fn(),
       then: jest.fn(callback => {
         callback({
-          result: {}
+          result: {},
         });
         return { catch: jest.fn() };
-      })
+      }),
     })),
     calendar: {
       events: {
-        list: jest.fn()
-      }
-    }
-  }
+        list: jest.fn(),
+      },
+    },
+  },
 };
 
 // Mock the global console object
@@ -67,9 +67,9 @@ beforeEach(() => {
     log: jest.fn(),
     error: jest.fn(),
     time: jest.fn(),
-    timeEnd: jest.fn()
+    timeEnd: jest.fn(),
   };
-  
+
   // Reset all mocks before each test
   jest.clearAllMocks();
 });
@@ -92,7 +92,7 @@ process.memoryUsage = jest.fn(() => ({
   rss: 1024 * 1024 * 10,
   heapTotal: 1024 * 1024 * 5,
   heapUsed: 1024 * 1024 * 3,
-  external: 1024 * 1024 * 1
+  external: 1024 * 1024 * 1,
 }));
 
 // Set up a mock Date object

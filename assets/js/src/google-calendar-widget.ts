@@ -182,7 +182,9 @@ const createGoogleCalendarWidget = ($: JQueryStatic): GoogleCalendarWidget => {
           // Since the date does not include any time zone information, Date() assumes that it is UTC.
           // But since it is just a date, it is midnight UTC, which is the day before in North America.
           // This will add the timezone offset to the date to convert the date into local time.
-          return new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+          return new Date(
+            date.getTime() + date.getTimezoneOffset() * 60 * 1000
+          );
         }
         return null;
       },
@@ -197,7 +199,9 @@ const createGoogleCalendarWidget = ($: JQueryStatic): GoogleCalendarWidget => {
   /**
    * Get the start time of a calendar entry
    */
-  function getStartTime(calendarEntry?: GoogleCalendarEvent): TimeObject | null {
+  function getStartTime(
+    calendarEntry?: GoogleCalendarEvent
+  ): TimeObject | null {
     return calendarEntry ? getTime(calendarEntry.start) : null;
   }
 
@@ -213,7 +217,8 @@ const createGoogleCalendarWidget = ($: JQueryStatic): GoogleCalendarWidget => {
    */
   function buildDate(entry: GoogleCalendarEvent): HTMLElement {
     /* display the date/time */
-    let dateString = window.google_calendar_widget_loc.all_day_event || 'All Day Event';
+    let dateString =
+      window.google_calendar_widget_loc.all_day_event || 'All Day Event';
 
     /* if the event has a date & time, override the default text */
     const startTime = getStartTime(entry);
@@ -254,7 +259,8 @@ const createGoogleCalendarWidget = ($: JQueryStatic): GoogleCalendarWidget => {
         }
 
         if (allDayEvent) {
-          dateString = window.google_calendar_widget_loc.all_day_event || 'All Day Event';
+          dateString =
+            window.google_calendar_widget_loc.all_day_event || 'All Day Event';
         } else if (oneDayEvent) {
           dateString = startJSDate.toString('ddd, MMM d, yyyy');
           dateString += ', ';
@@ -306,7 +312,10 @@ const createGoogleCalendarWidget = ($: JQueryStatic): GoogleCalendarWidget => {
   /**
    * Format event details according to the specified format
    */
-  function formatEventDetails(titleFormat: string, event: GoogleCalendarEvent): string {
+  function formatEventDetails(
+    titleFormat: string,
+    event: GoogleCalendarEvent
+  ): string {
     // titleFormat contains the format string from the user.
     // event is the calendar event.
     //
@@ -331,7 +340,8 @@ const createGoogleCalendarWidget = ($: JQueryStatic): GoogleCalendarWidget => {
       const date = startDateTime.getDate();
       if (date) {
         if (startDateTime.isDateOnly()) {
-          startTimeString = window.google_calendar_widget_loc.all_day || 'All Day';
+          startTimeString =
+            window.google_calendar_widget_loc.all_day || 'All Day';
         } else {
           startTimeString = date.toString('h:mm tt');
           if (endDateTime) {
@@ -344,7 +354,11 @@ const createGoogleCalendarWidget = ($: JQueryStatic): GoogleCalendarWidget => {
       }
     }
 
-    function replaceTITLE(strMatchingString: string, strGroup1: string, strGroup2: string): string {
+    function replaceTITLE(
+      strMatchingString: string,
+      strGroup1: string,
+      strGroup2: string
+    ): string {
       return title ? strGroup1 + title + strGroup2 : '';
     }
 
@@ -364,7 +378,10 @@ const createGoogleCalendarWidget = ($: JQueryStatic): GoogleCalendarWidget => {
       return endTimeString ? strGroup1 + endTimeString + strGroup2 : '';
     }
 
-    let output = titleFormat.replace(/\[([^\]]*)TITLE([^\]]*)\]/g, replaceTITLE);
+    let output = titleFormat.replace(
+      /\[([^\]]*)TITLE([^\]]*)\]/g,
+      replaceTITLE
+    );
     output = output.replace(/\[([^\]]*)STARTTIME([^\]]*)\]/g, replaceSTARTTIME);
     output = output.replace(/\[([^\]]*)ENDTIME([^\]]*)\]/g, replaceENDTIME);
 
@@ -443,7 +460,9 @@ const createGoogleCalendarWidget = ($: JQueryStatic): GoogleCalendarWidget => {
         if (entry) {
           // Check for errors
           if (entry.error) {
-            error('Error downloading Calendar ' + key + ' : ' + entry.error.message);
+            error(
+              'Error downloading Calendar ' + key + ' : ' + entry.error.message
+            );
           } else {
             log('Feed ' + key + ' has ' + entry.items.length + ' entries');
             entries.push(entry.items);
@@ -451,7 +470,9 @@ const createGoogleCalendarWidget = ($: JQueryStatic): GoogleCalendarWidget => {
         }
       }
 
-      log('Merging ' + entries.length + ' feeds into ' + maxResults + ' results.');
+      log(
+        'Merging ' + entries.length + ' feeds into ' + maxResults + ' results.'
+      );
 
       // Now look at the first element in each feed to figure out which one is first.
       // Insert them in the output in chronological order.
@@ -466,7 +487,10 @@ const createGoogleCalendarWidget = ($: JQueryStatic): GoogleCalendarWidget => {
             const startTime = getStartTime(entries[i][0]);
             if (startTime) {
               const startDate = startTime.getDate();
-              if (startDate && (firstStartTime === null || startDate < firstStartTime)) {
+              if (
+                startDate &&
+                (firstStartTime === null || startDate < firstStartTime)
+              ) {
                 firstStartTime = startDate;
                 firstStartIndex = i;
               }
@@ -614,7 +638,11 @@ const createGoogleCalendarWidget = ($: JQueryStatic): GoogleCalendarWidget => {
     // Create a batch request to fetch events from multiple calendars
     const batch = gapi.client.newBatch();
 
-    for (let calendarIndex = 0; calendarIndex < calendars.length; calendarIndex++) {
+    for (
+      let calendarIndex = 0;
+      calendarIndex < calendars.length;
+      calendarIndex++
+    ) {
       const idString = calendars[calendarIndex];
 
       // Skip blank calendars.
@@ -732,7 +760,8 @@ const createGoogleCalendarWidget = ($: JQueryStatic): GoogleCalendarWidget => {
 
           const errorDiv = document.createElement('div');
           errorDiv.className = 'google-calendar-widget-error';
-          errorDiv.textContent = 'Error loading Google Calendar API. Please check your API key.';
+          errorDiv.textContent =
+            'Error loading Google Calendar API. Please check your API key.';
           eventDiv.appendChild(errorDiv);
         }
       });

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.1.0] - 2025-04-06
 
 ### Added
+
 - Complete refactoring of the plugin for better performance and maintainability
 - Improved accessibility with keyboard navigation and screen reader support
 - Enhanced error handling and user feedback
@@ -19,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added ESLint and PHPCS for code quality
 
 ### Changed
+
 - Reorganized file structure to follow WordPress plugin best practices
 - Updated JavaScript to use modern ES6+ features
 - Improved CSS with better responsive design
@@ -28,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced security with proper data validation and sanitization
 
 ### Fixed
+
 - Fixed timezone handling for all-day events
 - Fixed duplicate event detection
 - Fixed accessibility issues with keyboard navigation
@@ -37,47 +40,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.0.0] - 2023-01-15
 
 ### Added
+
 - Initial release of the refactored plugin
 - Support for multiple calendars
 - Customizable event title format
 - Option to expand entries by default
 
 ### Changed
+
 - Updated to use Google Calendar API v3
 - Improved error handling
 - Enhanced UI with responsive design
 
 ### Fixed
+
 - Fixed various bugs and issues from the previous version
 
 ## [1.4.5] - 2022-05-20
 
 ### Fixed
+
 - Fixed compatibility issues with WordPress 5.9
 - Fixed various minor bugs
 
 ## [1.4.3] - 2021-11-10
 
 ### Added
+
 - Added support for WordPress 5.8
 
 ### Fixed
+
 - Fixed various minor bugs
 
 ## [1.3.2] - 2021-03-15
 
 ### Added
+
 - Added support for WordPress 5.7
 
 ### Fixed
+
 - Fixed various minor bugs
 
 ## [1.2.0] - 2020-09-10
 
 ### Added
+
 - Added support for WordPress 5.5
 
 ### Fixed
+
 - Fixed various minor bugs
 
 [2.1.0]: https://github.com/kazokuda/google-calendar-widget/compare/v2.0.0...v2.1.0
