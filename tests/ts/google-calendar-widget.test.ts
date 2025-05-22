@@ -10,16 +10,12 @@ import google_calendar_widget, {
   GoogleCalendarWidgetLocalization,
   GoogleCalendarWidget,
 } from '../../assets/js/src/google-calendar-widget';
-import type { JQueryStatic } from 'jquery';
-
 // Mock global objects
 declare global {
   interface Window {
     google_calendar_widget_loc: GoogleCalendarWidgetLocalization;
-    jQuery: JQueryStatic;
+    jQuery: any;
   }
-
-  var jQuery: JQueryStatic;
 }
 
 // Setup test environment
@@ -34,9 +30,9 @@ beforeAll(() => {
   };
 
   // Mock jQuery
-  const mockJQuery = {} as JQueryStatic;
+  const mockJQuery = {} as any;
   window.jQuery = mockJQuery;
-  global.jQuery = mockJQuery;
+  (global as any).jQuery = mockJQuery;
 });
 
 describe('Google Calendar Widget', () => {
