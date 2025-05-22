@@ -24,7 +24,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.1'
           tools: composer, phpcs
           extensions: mbstring, xml, intl
 
@@ -84,7 +84,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.1'
           extensions: mbstring, xml, intl
 
       - name: Install WPScan
@@ -117,7 +117,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.1'
           extensions: mbstring, xml, intl
 
       - name: Check for unsanitized inputs
